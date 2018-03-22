@@ -1,4 +1,7 @@
 #include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <vector>
 
 /// Show the answer to Project Euler, problem 2 (https://projecteuler.net/problem=1):
 ///
@@ -11,7 +14,32 @@
 /// By considering the terms in the Fibonacci sequence 
 /// whose values do not exceed four million, 
 /// find the sum of the even-valued terms.
+
+/// Main function of Euler 2 program
 int main() 
 {
-  std::cout << "123456\n";
+    std::vector<int> numbers{1,2};
+    int max_number = 4000000;
+    for(int counter = 0; counter < max_number; ++counter)
+    {
+        int vector_size = numbers.size();
+        int last_number = numbers[vector_size - 1];
+        if(last_number < max_number)
+        {
+             int second_last_number = numbers[vector_size - 2];
+             int next_number = last_number + second_last_number;
+             numbers.push_back(next_number);
+        }
+    }
+    std::vector<int> even_numbers;
+    for(int counter = 0; counter < static_cast<int>(numbers.size()); ++counter)
+    {
+        int current_number = numbers.at(counter);
+        if(current_number % 2 == 0)
+        {
+          even_numbers.push_back(current_number);
+        }
+    }
+    int sum = std::accumulate(even_numbers.begin(), even_numbers.end(), 0);
+    std::cout << sum << "\n";
 }
